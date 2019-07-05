@@ -4,7 +4,7 @@ const socket = require("socket.io");
 const app = require("./app");
 const socketConnection = require("./socket");
 const { db } = require("./utils/config");
-const { PORT } = process.env;
+const { PORT = 5000 } = process.env;
 
 const serverSuccess = () => console.log(`\nServer is running on port ${PORT}`);
 
