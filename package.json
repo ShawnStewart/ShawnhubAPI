@@ -1,0 +1,31 @@
+{
+    "name": "backend",
+    "version": "1.0.0",
+    "description": "",
+    "main": "index.js",
+    "scripts": {
+        "test": "NODE_ENV=test jest --watchAll",
+        "server": "nodemon src/server.js"
+    },
+    "keywords": [],
+    "author": "",
+    "license": "ISC",
+    "dependencies": {
+        "bcryptjs": "^2.4.3",
+        "cors": "^2.8.5",
+        "dotenv": "^8.0.0",
+        "express": "^4.16.4",
+        "jsonwebtoken": "^8.5.1",
+        "mongoose": "^5.5.6",
+        "morgan": "^1.9.1",
+        "passport": "^0.4.0",
+        "passport-jwt": "^4.0.0",
+        "socket.io": "^2.2.0",
+        "validator": "^10.11.0"
+    },
+    "devDependencies": {
+        "jest": "^24.8.0",
+        "nodemon": "^1.19.0",
+        "supertest": "^4.0.2"
+    }
+}
