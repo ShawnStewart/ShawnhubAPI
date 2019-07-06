@@ -1,6 +1,6 @@
 # ShawnhubAPI 💻
 
-## Overview
+## Overview 🔭
 
 Creating a Node (Express) backend to host various other projects and ideas I have.
 
@@ -10,10 +10,11 @@ API Documentation will be _Coming Soon™_.
 
 -   A running instance of MongoDB
 -   A `.env` file is required to load in environment variables
-    -   `NODE_ENV` - To tell the app what environment it's working in. Options are `dev` or `prod`
+    -   `NODE_ENV` - To tell the app what environment it's working in. Options are `dev` or `prod`.
     -   `PORT` - Port number the server will run on. Defaults to 5000.
-    -   `MONGO_URI` - MongoDB connection string
-    -   `SECRET` - Random hash
+    -   `MONGO_URI` - MongoDB connection string (remote).
+    -   `MONGO_URI_LOCAL` - Local MongoDB connection string. `NODE_ENV` must be set to `dev`.
+    -   `SECRET` - Secret key.
 
 ## <a id="getting-started"></a> Getting Started 🏃‍
 
