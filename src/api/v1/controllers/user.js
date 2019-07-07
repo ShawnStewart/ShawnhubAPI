@@ -21,7 +21,7 @@ const getAllUsers = async (query) => {
         totalCount,
     );
     const { page, size } = pagination;
-    const users = await userService.findAllUsers({}, (page - 1) * size, size);
+    const users = await userService.findAllUsers((page - 1) * size, size);
 
     pagination.pageSize = users.length;
 

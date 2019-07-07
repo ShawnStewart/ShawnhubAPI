@@ -2,7 +2,7 @@ const Game = require("../models/Game");
 
 const createNewGame = (game) => new Game(game).save();
 
-const findAllGames = () => Game.find().exec();
+const findAllGames = (skip, limit) => Game.find().exec();
 
 const findGameAndPlayersById = (id) =>
     Game.findById(id)

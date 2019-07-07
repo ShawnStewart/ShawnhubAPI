@@ -4,8 +4,8 @@ const createNewUser = (user) => new User(user).save();
 
 const deleteUserById = (id) => User.findByIdAndDelete(id).exec();
 
-const findAllUsers = (query = {}, skip, limit = 10) =>
-    User.find(query)
+const findAllUsers = (skip, limit = 10) =>
+    User.find()
         .skip(skip)
         .limit(limit)
         .exec();
