@@ -12,7 +12,7 @@ const {
 
 router.get(
     "/",
-    // passport.authenticate("admin-jwt", { session: false }),
+    passport.authenticate("admin-jwt", { session: false }),
     c(getAllUsers, (req, res, next) => [req.query]),
 );
 
