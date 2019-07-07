@@ -38,7 +38,6 @@ const UserSchema = new Schema({
 });
 
 UserSchema.methods.verifyPassword = function(plainText) {
-    console.log("hereiam", this.password);
     return comparePassword(plainText, this.password);
 };
 
