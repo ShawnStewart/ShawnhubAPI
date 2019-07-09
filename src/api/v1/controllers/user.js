@@ -34,7 +34,7 @@ const getAllUsers = async (query) => {
 const getUserById = (userId) => {
     return userService.findUserById(userId).then((user) => {
         if (!user) {
-            return new MissingResourceError("User");
+            throw new MissingResourceError("User");
         }
 
         return user;
@@ -97,7 +97,7 @@ const updateUserById = async (userId, body) => {
 
     return userService.updateUserById(userId, update).then((updated) => {
         if (!updated) {
-            return new MissingResourceError("User");
+            throw new MissingResourceError("User");
         }
 
         return updated;
@@ -107,7 +107,7 @@ const updateUserById = async (userId, body) => {
 const deleteUserById = (userId) =>
     userService.deleteUserById(userId).then((deleted) => {
         if (!deleted) {
-            return new MissingResourceError("User");
+            throw new MissingResourceError("User");
         }
 
         return deleted;
