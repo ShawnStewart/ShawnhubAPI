@@ -35,11 +35,7 @@ class AuthenticationError extends InternalServerError {
 
 class AuthorizationError extends InternalServerError {
     constructor(message) {
-        super(
-            message ||
-                "Unauthorized. I know who you are and I believe who you say you are, but you just don't have permission to access this resource. Maybe if you ask the system administrator nicely, you’ll get permission. But please don’t bother me again until your predicament changes.",
-            401,
-        );
+        super(message || "You are not authorized to access this resource", 401);
     }
 }
 
