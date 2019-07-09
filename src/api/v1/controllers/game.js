@@ -2,7 +2,10 @@ const gameService = require("../services/game");
 const userService = require("../services/user");
 
 const { createPagination } = require("../utils");
-const { ArgumentsError } = require("../../../utils/errors");
+const {
+    ArgumentsError,
+    MissingResourceError,
+} = require("../../../utils/errors");
 const { creationValidation } = require("../validation/games");
 
 const createGame = async (user, body) => {
@@ -47,4 +50,35 @@ const getAllGames = async (query) => {
 
 const getGameById = (gameId) => gameService.findGameAndPlayersById(gameId);
 
-module.exports = { createGame, getAllGames, getGameById };
+const joinGameById = async (user, gameId) => {
+    if (user.gameId) {
+        throw new ArgumentsError({
+            "user.gameId": "User is already in a game",
+        });
+    }
+
+    const game = await gameService.findGameById(gameId);
+
+    if (!game) {
+        throw new MissingResourceError("Game");
+    } else if (game.status > 0) {
+        throw new ArgumentsError({ status: "Game has already started" });
+    } else if (game.players.length === game.maxPlayers) {
+        throw new ArgumentsError({ players: "Game is full" });
+    }
+
+    game.players.push(user._id);
+    await game.save();
+
+    user.gameId = game._id;
+    await user.save();
+
+    return { user, game };
+};
+
+module.exports = {
+    createGame,
+    getAllGames,
+    getGameById,
+    joinGameById,
+};
