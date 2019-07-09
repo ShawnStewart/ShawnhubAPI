@@ -1,11 +1,30 @@
 const gameService = require("../services/game");
+const userService = require("../services/user");
 
 const { createPagination } = require("../utils");
-const {} = require("../../../utils/errors");
+const { ArgumentsError } = require("../../../utils/errors");
 const { creationValidation } = require("../validation/games");
 
-const createGame = (user, body) => {
-    return { user, body };
+const createGame = async (user, body) => {
+    const { gameId } = user;
+    const { errors, isValid } = creationValidation({ gameId, ...body });
+
+    if (!isValid) {
+        throw new ArgumentsError(errors);
+    }
+
+    const newGame = {
+        ownerId: user._id,
+        players: [user._id],
+        maxPlayers: body.maxPlayers,
+    };
+
+    const game = await gameService.createNewGame(newGame);
+    const owner = await userService.updateUserById(user.id, {
+        gameId: game._id,
+    });
+
+    return { game, owner };
 };
 
 const getAllGames = async (query) => {
