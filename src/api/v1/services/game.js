@@ -2,7 +2,7 @@ const Game = require("../models/Game");
 
 const createNewGame = (game) => new Game(game).save();
 
-const findAllGames = (skip, limit = 25) =>
+const findAllGames = (skip = 1, limit = 25) =>
     Game.find()
         .skip(skip)
         .limit(limit)

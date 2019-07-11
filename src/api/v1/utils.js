@@ -20,7 +20,7 @@ const createPagination = (pageNumber, size, resourceCount) => {
 
     const pageCount = Math.ceil(resourceCount / size);
 
-    if (pageNumber < 1) {
+    if (pageNumber < 1 || pageCount === 0) {
         pageNumber = 1;
     } else if (pageNumber > pageCount) {
         pageNumber = pageCount;
