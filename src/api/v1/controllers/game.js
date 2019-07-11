@@ -37,8 +37,8 @@ const getAllGames = async (query) => {
         query.size,
         totalCount,
     );
-    const { page, size } = pagination;
-    const games = await gameService.findAllGames((page - 1) * size, size);
+    const { pageNumber, size } = pagination;
+    const games = await gameService.findAllGames((pageNumber - 1) * size, size);
 
     pagination.pageSize = games.length;
 
