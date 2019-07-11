@@ -81,7 +81,36 @@ const joinGameById = async (user, gameId) => {
     user.gameId = game._id;
     await user.save();
 
-    return { user, game };
+    return { game, user };
+};
+
+const leaveGameById = async (user, gameId) => {
+    if (!user.gameId || `${user.gameId}` !== `${gameId}`) {
+        throw new ArgumentsError({ "user.gameId": "User is not in this game" });
+    }
+
+    const game = await gameService.findGameById(gameId);
+
+    if (!game) {
+        throw new MissingResourceError("Game");
+    }
+
+    game.players.remove(user._id);
+    user.gameId = null;
+
+    if (!game.players.length) {
+        await game.delete();
+        await user.save();
+
+        return { deleted: true, game, user };
+    } else if (`${game.ownerId}` === `${user._id}`) {
+        game.ownerId = game.players[0];
+    }
+
+    await game.save();
+    await user.save();
+
+    return { game, user };
 };
 
 module.exports = {
@@ -89,4 +118,5 @@ module.exports = {
     getAllGames,
     getGameById,
     joinGameById,
+    leaveGameById,
 };

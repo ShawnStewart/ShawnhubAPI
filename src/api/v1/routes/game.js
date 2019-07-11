@@ -6,6 +6,7 @@ const {
     getAllGames,
     getGameById,
     joinGameById,
+    leaveGameById,
 } = require("../controllers/game");
 
 router
@@ -22,6 +23,12 @@ router.put(
     "/:id/join",
     passport.authenticate("user-jwt", { session: false }),
     c(joinGameById, (req, res, next) => [req.user, req.params.id]),
+);
+
+router.put(
+    "/:id/leave",
+    passport.authenticate("user-jwt", { session: false }),
+    c(leaveGameById, (req, res, next) => [req.user, req.params.id]),
 );
 
 module.exports = router;
