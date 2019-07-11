@@ -21,29 +21,6 @@ app.use(passport.initialize());
 passport.use("admin-jwt", adminJwtStrategy);
 passport.use("user-jwt", userJwtStrategy);
 
-// app.use(function(req, res, next) {
-//     res.header("Access-Control-Allow-Origin", "*");
-//     res.header(
-//         "Access-Control-Allow-Headers",
-//         "Origin, X-Requested-With, Content-Type, Accept, Authorization",
-//     );
-
-//     if (req.method === "OPTIONS") {
-//         res.header(
-//             "Access-Control-Allow-Methods",
-//             "GET",
-//             "POST",
-//             "PUT",
-//             "PATCH",
-//             "DELETE",
-//         );
-
-//         return res.end();
-//     }
-
-//     next();
-// });
-
 // Route requests
 app.use("/test-structure", testStructure);
 app.use("/api/v1", apiV1Routes);
