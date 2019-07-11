@@ -48,7 +48,15 @@ const getAllGames = async (query) => {
     };
 };
 
-const getGameById = (gameId) => gameService.findGameAndPlayersById(gameId);
+const getGameById = (gameId) => {
+    return gameService.findGameAndPlayersById(gameId).then((game) => {
+        if (!game) {
+            throw new MissingResourceError("Game");
+        }
+
+        return game;
+    });
+};
 
 const joinGameById = async (user, gameId) => {
     if (user.gameId) {
