@@ -11,6 +11,13 @@ const controllerHandler = (promise, params) => async (req, res, next) => {
 const createPagination = (pageNumber, size, resourceCount) => {
     pageNumber = parseInt(pageNumber) || 1;
     size = parseInt(size) || 25;
+
+    if (size < 1) {
+        size = 25;
+    } else if (size > 100) {
+        size = 100;
+    }
+
     const pageCount = Math.ceil(resourceCount / size);
 
     if (pageNumber < 1) {
@@ -19,16 +26,11 @@ const createPagination = (pageNumber, size, resourceCount) => {
         pageNumber = pageCount;
     }
 
-    if (size < 1) {
-        size = 25;
-    } else if (size > 100) {
-        size = 100;
-    }
-
     return {
         pageCount,
         pageNumber,
         resourceCount,
+        size,
     };
 };
 
