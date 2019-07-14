@@ -95,12 +95,12 @@ const updateUserById = async (userId, body) => {
         throw new ArgumentsError(errors);
     }
 
-    return userService.updateUserById(userId, update).then((updated) => {
-        if (!updated) {
+    return userService.updateUserById(userId, update).then((user) => {
+        if (!user) {
             throw new MissingResourceError("User");
         }
 
-        return updated;
+        return { user };
     });
 };
 

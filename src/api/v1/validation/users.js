@@ -65,13 +65,11 @@ const registrationValidation = (data) => {
 const updateValidation = (data) => {
     const errors = {};
     const update = {};
-    let { username, email } = data;
+    let { username, email, ...unknownFields } = data;
 
     // Username
     if (!checkEmpty(username)) {
-        if (Validator.isEmpty(username)) {
-            errors.username = "Username is required";
-        } else if (!Validator.isLength(username, { max: 21 })) {
+        if (!Validator.isLength(username, { max: 21 })) {
             errors.username = "Username must be less than 21 characters";
         } else if (!/^[\w\d]+$/.test(username)) {
             errors.username = "Username can only be letters or numbers";
@@ -89,29 +87,11 @@ const updateValidation = (data) => {
         update.email = email;
     }
 
-    // // Current password, new password, and new password confirmation
-    // if (!checkEmpty(newPassword)) {
-    //     if (Validator.isEmpty(currentPassword)) {
-    //         errors.currentPassword = "Please enter current password";
-    //     }
-
-    //     if (Validator.isEmpty(newPassword)) {
-    //         errors.newPassword = "Password is required";
-    //     } else if (!Validator.isLength(newPassword, { min: 8 })) {
-    //         errors.newPassword = "Password must be atleast 8 characters";
-    //     }
-
-    //     newPasswordConfirm = !checkEmpty(newPasswordConfirm) ? newPasswordConfirm : "";
-
-    //     if (Validator.isEmpty(newPasswordConfirm)) {
-    //         errors.newPasswordConfirm = "Please confirm your password";
-    //     } else if (!Validator.equals(newPassword, newPasswordConfirm)) {
-    //         errors.newPasswordConfirm = "Passwords do not match";
-    //     }
-
-    //     update.newPassword = newPassword;
-    //     update.newPasswordConfirm = newPasswordConfirm;
-    // }
+    if (unknownFields) {
+        Object.keys(unknownFields).forEach((f) => {
+            errors[f] = `Invalid field \`${f}\``;
+        });
+    }
 
     return { errors, isValid: checkEmpty(errors), update };
 };
