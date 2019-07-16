@@ -113,10 +113,47 @@ const leaveGameById = async (user, gameId) => {
     return { game, user };
 };
 
+const kickPlayerById = async (user, gameId, playerId) => {
+    if (!user.gameId || `${user.gameId}` !== `${gameId}`) {
+        throw new ArgumentsError({ "user.gameId": "User is not in this game" });
+    } else if (!playerId) {
+        throw new ArgumentsError({
+            playerId: "The user ID of the player to kick was not provided",
+        });
+    }
+
+    const game = await gameService.findGameById(gameId);
+
+    if (`${user._id}` !== `${game.ownerId}`) {
+        throw new ArgumentsError({
+            "user._id": "Only the game owner can kick players",
+        });
+    } else if (`${user._id}` === `${playerId}`) {
+        throw new ArgumentsError({
+            "user._id": "The game owner can't be kicked",
+        });
+    } else if (!game.players.includes(playerId)) {
+        throw new ArgumentsError({
+            playerId: "The player was not found in this game",
+        });
+    }
+
+    const player = await userService.findUserById(playerId);
+
+    game.players.remove(playerId);
+    player.gameId = null;
+
+    await game.save();
+    await player.save();
+
+    return { game, kicked: player };
+};
+
 module.exports = {
     createGame,
     getAllGames,
     getGameById,
     joinGameById,
+    kickPlayerById,
     leaveGameById,
 };
