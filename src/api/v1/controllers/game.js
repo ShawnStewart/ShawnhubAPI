@@ -84,35 +84,6 @@ const joinGameById = async (user, gameId) => {
     return { game, user };
 };
 
-const leaveGameById = async (user, gameId) => {
-    if (!user.gameId || `${user.gameId}` !== `${gameId}`) {
-        throw new ArgumentsError({ "user.gameId": "User is not in this game" });
-    }
-
-    const game = await gameService.findGameById(gameId);
-
-    if (!game) {
-        throw new MissingResourceError("Game");
-    }
-
-    game.players.remove(user._id);
-    user.gameId = null;
-
-    if (!game.players.length) {
-        await game.delete();
-        await user.save();
-
-        return { deleted: true, game, user };
-    } else if (`${game.ownerId}` === `${user._id}`) {
-        game.ownerId = game.players[0];
-    }
-
-    await game.save();
-    await user.save();
-
-    return { game, user };
-};
-
 const kickPlayerById = async (user, gameId, playerId) => {
     if (!user.gameId || `${user.gameId}` !== `${gameId}`) {
         throw new ArgumentsError({ "user.gameId": "User is not in this game" });
@@ -147,6 +118,35 @@ const kickPlayerById = async (user, gameId, playerId) => {
     await player.save();
 
     return { game, kicked: player };
+};
+
+const leaveGameById = async (user, gameId) => {
+    if (!user.gameId || `${user.gameId}` !== `${gameId}`) {
+        throw new ArgumentsError({ "user.gameId": "User is not in this game" });
+    }
+
+    const game = await gameService.findGameById(gameId);
+
+    if (!game) {
+        throw new MissingResourceError("Game");
+    }
+
+    game.players.remove(user._id);
+    user.gameId = null;
+
+    if (!game.players.length) {
+        await game.delete();
+        await user.save();
+
+        return { deleted: true, game, user };
+    } else if (`${game.ownerId}` === `${user._id}`) {
+        game.ownerId = game.players[0];
+    }
+
+    await game.save();
+    await user.save();
+
+    return { game, user };
 };
 
 module.exports = {
