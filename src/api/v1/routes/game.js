@@ -8,6 +8,7 @@ const {
     joinGameById,
     kickPlayerById,
     leaveGameById,
+    transferGameOwnership,
 } = require("../controllers/game");
 
 router
@@ -40,6 +41,16 @@ router.put(
     "/:id/leave",
     passport.authenticate("user-jwt", { session: false }),
     c(leaveGameById, (req, res, next) => [req.user, req.params.id]),
+);
+
+router.put(
+    "/:id/transfer-ownership/:playerId",
+    passport.authenticate("user-jwt", { session: false }),
+    c(transferGameOwnership, (req, res, next) => [
+        req.user,
+        req.params.id,
+        req.params.playerId,
+    ]),
 );
 
 module.exports = router;

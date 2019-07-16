@@ -149,6 +149,34 @@ const leaveGameById = async (user, gameId) => {
     return { game, user };
 };
 
+const transferGameOwnership = async (user, gameId, playerId) => {
+    if (!user.gameId || `${user.gameId}` !== `${gameId}`) {
+        throw new ArgumentsError({ "user.gameId": "User is not in this game" });
+    }
+
+    const game = await gameService.findGameById(gameId);
+
+    if (`${user._id}` !== `${game.ownerId}`) {
+        throw new ArgumentsError({
+            "user._id": "Only the game owner can transfer ownership",
+        });
+    } else if (!game.players.includes(playerId)) {
+        throw new ArgumentsError({
+            playerId: "The player was not found in this game",
+        });
+    } else if (`${playerId}` === `${game.ownerId}`) {
+        throw new ArgumentsError({
+            playerId: "The player is already the owner",
+        });
+    }
+
+    game.ownerId = playerId;
+
+    await game.save();
+
+    return { game };
+};
+
 module.exports = {
     createGame,
     getAllGames,
@@ -156,4 +184,5 @@ module.exports = {
     joinGameById,
     kickPlayerById,
     leaveGameById,
+    transferGameOwnership,
 };
