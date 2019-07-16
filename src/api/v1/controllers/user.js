@@ -110,7 +110,7 @@ const deleteUserById = (userId) =>
             throw new MissingResourceError("User");
         }
 
-        return deleted;
+        return { deleted };
     });
 
 module.exports = {
