@@ -5,7 +5,7 @@ const checkEmpty = (value) =>
     (typeof value === "string" && value.trim().length === 0);
 
 const dbConnectionError = (err) =>
-    console.log(`Error connecting to MongoDB...\n${err.stack}`);
+    console.log(`Error connecting to MongoDB, check environment variables...\n${err.stack}`);
 const dbConnectionSuccess = () => console.log("=== Connected to MongoDB ===\n");
 
 module.exports = { checkEmpty, dbConnectionError, dbConnectionSuccess };

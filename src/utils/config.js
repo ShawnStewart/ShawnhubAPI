@@ -6,8 +6,7 @@ const { dbConnectionError, dbConnectionSuccess } = require("./utils");
 const { MONGO_URI, MONGO_URI_LOCAL, NODE_ENV } = process.env;
 
 const connect = () => {
-    const connectionString =
-        MONGO_URI_LOCAL && NODE_ENV === "dev" ? MONGO_URI_LOCAL : MONGO_URI;
+    const connectionString = NODE_ENV === "prod" ? MONGO_URI : MONGO_URI_LOCAL;
 
     return mongoose
         .connect(connectionString, mongooseOptions)
