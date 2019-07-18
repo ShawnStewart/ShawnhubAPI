@@ -26,15 +26,21 @@ const GameSchema = new Schema({
         min: 2,
         max: 8,
     },
+    isFull: {
+        type: Boolean,
+        default: false,
+    },
     createdAt: {
-        type: Number,
+        type: Date,
         default: Date.now(),
     },
     startedAt: {
         type: Date,
+        default: null,
     },
     finishedAt: {
         type: Date,
+        default: null,
     },
 });
 
