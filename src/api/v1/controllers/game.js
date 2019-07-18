@@ -71,14 +71,19 @@ const joinGameById = async (user, gameId) => {
         throw new MissingResourceError("Game");
     } else if (game.status > 0) {
         throw new ArgumentsError({ status: "Game has already started" });
-    } else if (game.players.length === game.maxPlayers) {
+    } else if (game.isFull === true) {
         throw new ArgumentsError({ players: "Game is full" });
     }
 
     game.players.push(user._id);
-    await game.save();
+
+    if (game.players.length === game.maxPlayers) {
+        game.isFull = true;
+    }
 
     user.gameId = game._id;
+
+    await game.save();
     await user.save();
 
     return { game, user };
@@ -118,6 +123,10 @@ const kickPlayerById = async (user, gameId, playerId) => {
     game.players.remove(playerId);
     player.gameId = null;
 
+    if (game.isFull === true) {
+        game.isFull = false;
+    }
+
     await game.save();
     await player.save();
 
@@ -145,6 +154,10 @@ const leaveGameById = async (user, gameId) => {
         return { deleted: true, game, user };
     } else if (`${game.ownerId}` === `${user._id}`) {
         game.ownerId = game.players[0];
+    }
+
+    if (game.isFull === true) {
+        game.isFull = false;
     }
 
     await game.save();
