@@ -153,6 +153,30 @@ const leaveGameById = async (user, gameId) => {
     return { game, user };
 };
 
+const startGame = async (user, gameId) => {
+    if (!user.gameId || `${user.gameId}` !== `${gameId}`) {
+        throw new ArgumentsError({ "user.gameId": "User is not in this game" });
+    }
+
+    const game = await gameService.findGameById(gameId);
+
+    if (`${user._id}` !== `${game.ownerId}`) {
+        throw new ArgumentsError({
+            user: "Only the game owner can start the game",
+        });
+    } else if (game.status !== 0) {
+        throw new ArgumentsError({
+            "game.status": "The game is not waiting to be started",
+        });
+    }
+
+    game.status = 1;
+
+    await game.save();
+
+    return { game };
+};
+
 const transferGameOwnership = async (user, gameId, playerId) => {
     if (!user.gameId || `${user.gameId}` !== `${gameId}`) {
         throw new ArgumentsError({ "user.gameId": "User is not in this game" });
@@ -162,7 +186,7 @@ const transferGameOwnership = async (user, gameId, playerId) => {
 
     if (`${user._id}` !== `${game.ownerId}`) {
         throw new ArgumentsError({
-            "user._id": "Only the game owner can transfer ownership",
+            user: "Only the game owner can transfer ownership",
         });
     } else if (!game.players.includes(playerId)) {
         throw new ArgumentsError({
@@ -188,5 +212,6 @@ module.exports = {
     joinGameById,
     kickPlayerById,
     leaveGameById,
+    startGame,
     transferGameOwnership,
 };

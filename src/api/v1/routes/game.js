@@ -8,6 +8,7 @@ const {
     joinGameById,
     kickPlayerById,
     leaveGameById,
+    startGame,
     transferGameOwnership,
 } = require("../controllers/game");
 
@@ -41,6 +42,12 @@ router.put(
     "/:id/leave",
     passport.authenticate("user-jwt", { session: false }),
     c(leaveGameById, (req, res, next) => [req.user, req.params.id]),
+);
+
+router.put(
+    "/:id/start",
+    passport.authenticate("user-jwt", { session: false }),
+    c(startGame, (req, res, next) => [req.user, req.params.id]),
 );
 
 router.put(
