@@ -8,6 +8,12 @@ const findAllGames = (skip = 1, limit = 25) =>
         .limit(limit)
         .exec();
 
+const findAllJoinableGames = (skip = 1, limit = 25) =>
+    Game.find({ isFull: false, status: 0 })
+        .skip(skip)
+        .limit(limit)
+        .exec();
+
 const findGameAndPlayersById = (id) =>
     Game.findById(id)
         .populate("ownerId players", "username")
@@ -15,8 +21,10 @@ const findGameAndPlayersById = (id) =>
 
 const findGameById = (id) => Game.findById(id).exec();
 
-const getEstimatedCount = (query = {}) =>
-    Game.estimatedDocumentCount(query).exec();
+const getEstimatedCountAll = () => Game.estimatedDocumentCount().exec();
+
+const getEstimatedCountJoinable = () =>
+    Game.count({ isFull: false, status: 0 }).exec();
 
 const updateGameById = (id, update) =>
     Game.findByIdAndUpdate(id, update, { new: true }).exec();
@@ -24,8 +32,10 @@ const updateGameById = (id, update) =>
 module.exports = {
     createNewGame,
     findAllGames,
+    findAllJoinableGames,
     findGameAndPlayersById,
     findGameById,
-    getEstimatedCount,
+    getEstimatedCountAll,
+    getEstimatedCountJoinable,
     updateGameById,
 };

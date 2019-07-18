@@ -4,6 +4,7 @@ const { c } = require("../utils");
 const {
     createGame,
     getAllGames,
+    getAllJoinableGames,
     getGameById,
     joinGameById,
     kickPlayerById,
@@ -14,11 +15,13 @@ const {
 
 router
     .route("/")
-    .get(c(getAllGames, (req, res, next) => [req.query]))
+    .get(c(getAllJoinableGames, (req, res, next) => [req.query]))
     .post(
         passport.authenticate("user-jwt", { session: false }),
         c(createGame, (req, res, next) => [req.user, req.body]),
     );
+
+router.get("/all", c(getAllGames, (req, res, next) => [req.query]));
 
 router.route("/:id").get(c(getGameById, (req, res, next) => [req.params.id]));
 

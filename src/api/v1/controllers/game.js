@@ -31,7 +31,7 @@ const createGame = async (user, body) => {
 };
 
 const getAllGames = async (query) => {
-    const totalCount = await gameService.getEstimatedCount();
+    const totalCount = await gameService.getEstimatedCountAll();
     const pagination = await createPagination(
         query.page,
         query.size,
@@ -39,6 +39,27 @@ const getAllGames = async (query) => {
     );
     const { pageNumber, size } = pagination;
     const games = await gameService.findAllGames((pageNumber - 1) * size, size);
+
+    pagination.pageSize = games.length;
+
+    return {
+        pagination,
+        games,
+    };
+};
+
+getAllJoinableGames = async (query) => {
+    const totalCount = await gameService.getEstimatedCountJoinable();
+    const pagination = await createPagination(
+        query.page,
+        query.size,
+        totalCount,
+    );
+    const { pageNumber, size } = pagination;
+    const games = await gameService.findAllJoinableGames(
+        (pageNumber - 1) * size,
+        size,
+    );
 
     pagination.pageSize = games.length;
 
@@ -222,6 +243,7 @@ const transferGameOwnership = async (user, gameId, playerId) => {
 module.exports = {
     createGame,
     getAllGames,
+    getAllJoinableGames,
     getGameById,
     joinGameById,
     kickPlayerById,
