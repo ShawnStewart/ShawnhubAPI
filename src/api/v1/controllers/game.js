@@ -171,6 +171,7 @@ const startGame = async (user, gameId) => {
     }
 
     game.status = 1;
+    game.startedAt = Date.now();
 
     await game.save();
 
