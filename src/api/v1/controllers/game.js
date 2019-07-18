@@ -95,7 +95,11 @@ const kickPlayerById = async (user, gameId, playerId) => {
 
     const game = await gameService.findGameById(gameId);
 
-    if (`${user._id}` !== `${game.ownerId}`) {
+    if (!game) {
+        throw new MissingResourceError("Game");
+    } else if (game.status > 0) {
+        throw new ArgumentsError({ status: "Game has already started" });
+    } else if (`${user._id}` !== `${game.ownerId}`) {
         throw new ArgumentsError({
             "user._id": "Only the game owner can kick players",
         });
