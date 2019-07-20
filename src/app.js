@@ -26,9 +26,7 @@ app.use("/api/v1", apiV1Routes);
 
 // Unknown endpoint
 app.use((req, res, next) => {
-    const err = new InvalidEndpointError(req.originalUrl);
-
-    return next(err);
+    throw new InvalidEndpointError(req.originalUrl);
 });
 
 // Error handling
