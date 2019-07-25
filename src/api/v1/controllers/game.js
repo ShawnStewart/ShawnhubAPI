@@ -184,7 +184,7 @@ const leaveGameById = async (user, gameId) => {
     await game.save();
     await user.save();
 
-    return { game, user }
+    return { game, user };
 };
 
 const startGame = async (user, gameId) => {
