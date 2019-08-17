@@ -40,20 +40,27 @@ Any contributions are welcome! 💙
             <div>💻🤔⚠️</div>
         </td>
         <td width="120px" style="background-color: wheat;">
+            <img src="https://avatars0.githubusercontent.com/u/36747636?s=400&v=4" width="100px" alt="Alec Richardson" />
+            <div>
+                <b><a href="https://www.github.com/AlecRichardson" style="color: white;">Alec Richardson</a></b>
+            </div>
+            <div>💻🤔</div>
+        </td>
+        <td width="120px" style="background-color: cadetblue;">
             <img src="https://avatars3.githubusercontent.com/u/8251544?s=400&v=4" width="100px" alt="Eric Gomez" />
             <div>
-                <b><a href="https://www.github.com/ShawnStewart" style="color: white;">Eric Gomez</a></b>
+                <b><a href="https://github.com/EricGomez101" style="color: white;">Eric Gomez</a></b>
             </div>
             <div>🤔💬</div>
         </td>
-        <td width="120px" style="background-color: cadetblue;">
+        <td width="120px" style="background-color: salmon;">
             <img src="https://avatars0.githubusercontent.com/u/36936448?s=460&v=4" width="100px" alt="Jacob Leon Lyerla" />
             <div>
-                <b><a href="https://www.github.com/ShawnStewart" style="color: white;">Jacob Leon Lyerla</a></b>
+                <b><a href="https://github.com/JacobLeonLyerla" style="color: white;">Jacob Leon Lyerla</a></b>
             </div>
             <div>💵</div>
         </td>
-        <td width="120px" style="background-color: salmon;">
+        <td width="120px" style="background-color: wheat;">
             <img src="https://picsum.photos/100" width="100px" alt="https://picsum.photos/100">
             <div>
                 <b><a href="#getting-started">Your name here!</a></b>
