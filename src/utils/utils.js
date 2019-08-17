@@ -8,4 +8,11 @@ const dbConnectionError = (err) =>
     console.log(`Error connecting to MongoDB, check environment variables...\n${err.stack}`);
 const dbConnectionSuccess = () => console.log("=== Connected to MongoDB ===\n");
 
-module.exports = { checkEmpty, dbConnectionError, dbConnectionSuccess };
+const serverSuccess = (port) => console.log(`\nServer is running on port ${port}`);
+
+module.exports = {
+    checkEmpty,
+    dbConnectionError,
+    dbConnectionSuccess,
+    serverSuccess,
+};

@@ -2,17 +2,14 @@ require("dotenv").config();
 const socket = require("socket.io");
 
 const app = require("./app");
-const socketConnection = require("./socket");
+const socketSetup = require("./socket");
 const { db } = require("./utils/config");
+const { serverSuccess } = require("./utils/utils");
 const { PORT = 5000 } = process.env;
 
-const serverSuccess = () => console.log(`\nServer is running on port ${PORT}`);
-
 // Server listener
-const server = app.listen(PORT, serverSuccess);
+const server = app.listen(PORT, () => serverSuccess(PORT));
 
+// Connect to database and set up socket listener
 db.connect();
-
-// Socket listener
-const io = socket.listen(server);
-io.on("connection", socketConnection);
+socketSetup(server);
