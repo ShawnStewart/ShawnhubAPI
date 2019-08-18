@@ -8,3 +8,5 @@ router.post(
     passport.authenticate("user-jwt", { session: false }),
     c(createCharge, (req, res, next) => [req.user, req.body]),
 );
+
+module.exports = router;

@@ -3,10 +3,10 @@ const mongoose = require("mongoose");
 
 const { mongooseOptions } = require("./constants");
 const { dbConnectionError, dbConnectionSuccess } = require("./utils");
-const { MONGO_URI, MONGO_URI_LOCAL, NODE_ENV } = process.env;
+const { MONGO_URI, MONGO_URI_LOCAL } = process.env;
 
 const connect = () => {
-    const connectionString = MONGO_URI;
+    const connectionString = MONGO_URI_LOCAL || MONGO_URI;
 
     return mongoose
         .connect(connectionString, mongooseOptions)
