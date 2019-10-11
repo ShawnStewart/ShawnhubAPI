@@ -35,6 +35,6 @@ const createPagination = (pageNumber, size, resourceCount) => {
 };
 
 module.exports = {
-    c: controllerHandler,
+    controllerHandler,
     createPagination,
 };
